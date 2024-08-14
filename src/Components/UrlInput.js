@@ -6,6 +6,7 @@ import {
   VStack,
   HStack,
   Text,
+  Center,
   useToast,
   Image,
   Grid,
@@ -175,6 +176,17 @@ const UrlInput = () => {
         body: JSON.stringify({ url }),
         credentials: 'include'
       });
+
+      if (response.status === 403) {
+        toast({
+          title: 'Insufficient Credits',
+          description: 'You are out of credits. Please purchase more to continue generating infographics.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
   
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -309,6 +321,16 @@ const UrlInput = () => {
     }
   };
 
+  if (!user) {
+    return (
+      <Center height="100vh">
+        <Button onClick={handleGoogleLogin} colorScheme="blue" size="lg">
+          Login with Google
+        </Button>
+      </Center>
+    );
+  }
+
   return (
     <Box position="relative" height="100vh">
       <IconButton
@@ -320,18 +342,25 @@ const UrlInput = () => {
         onClick={() => setIsSidebarOpen(true)}
       />
 
-      <Drawer 
-        placement="left" 
-        onClose={() => {}}  // Prevent closing with close button
-        isOpen={isSidebarOpen} 
+      <Drawer
+        placement="left"
+        onClose={() => {}} // Prevent closing with close button
+        isOpen={isSidebarOpen}
         size="xs"
       >
         <DrawerContent ref={sidebarRef}>
           <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
-          <DrawerBody as={Flex} flexDirection="column" justifyContent="space-between" height="100%">
+          <DrawerBody
+            as={Flex}
+            flexDirection="column"
+            justifyContent="space-between"
+            height="100%"
+          >
             <VStack align="stretch" spacing={4}>
-            <Flex align="center" justify="flex-start" marginTop={20}>
-                <Text flex={1} textAlign="center">Home</Text>
+              <Flex align="center" justify="flex-start" marginTop={20}>
+                <Text flex={1} textAlign="center">
+                  Home
+                </Text>
               </Flex>
               {/* <Flex align="center" justify="flex-start">
                 <Text flex={1} textAlign="center">Generate From Scratch</Text>
@@ -346,18 +375,24 @@ const UrlInput = () => {
               </Flex> */}
             </VStack>
             {user ? (
-                <>
-                  <Text textAlign="center">Credits: {credits}</Text>
-                  <Button onClick={handleLogout} colorScheme="red">Logout</Button>
-                </>
-              ) : (
-                <Button onClick={handleGoogleLogin} colorScheme="blue">Login with Google</Button>
-              )}
+              <VStack spacing={4}>
+                <Text textAlign="center">Credits: {credits}</Text>
+                <Button onClick={handleLogout} colorScheme="red" width="100%">
+                  Logout
+                </Button>
+              </VStack>
+            ) : (
+              <Button onClick={handleGoogleLogin} colorScheme="blue">
+                Login with Google
+              </Button>
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>
 
-      <Flex direction="column" height="100%" pt={16}>  {/* Added top padding to account for hamburger icon */}
+      <Flex direction="column" height="100%" pt={16}>
+        {" "}
+        {/* Added top padding to account for hamburger icon */}
         <Flex flex={1} justify="center" align="center" direction="column">
           <Box width="100%" maxWidth="600px" p={4}>
             <Input
@@ -389,21 +424,32 @@ const UrlInput = () => {
 
           {infographics.length > 0 && (
             <Box p={4} width="90%" overflowY="auto" marginTop={15}>
-              <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={6}>
+              <Grid
+                templateColumns="repeat(auto-fit, minmax(200px, 1fr))"
+                gap={6}
+              >
                 {infographics.map((infographic, index) => (
                   <Box key={index} borderWidth={1} borderRadius="md" p={4}>
-                    <Image 
-                      src={infographic.base64_image} 
-                      alt={`Infographic ${index + 1}`} 
+                    <Image
+                      src={infographic.base64_image}
+                      alt={`Infographic ${index + 1}`}
                       cursor="pointer"
                       mb={2}
                       onClick={() => handleEdit(infographic)}
                     />
                     <HStack justifyContent="space-between">
-                      <Button onClick={() => handleDownload(infographic)} colorScheme="green" size="sm">
+                      <Button
+                        onClick={() => handleDownload(infographic)}
+                        colorScheme="green"
+                        size="sm"
+                      >
                         Download
                       </Button>
-                      <Button onClick={() => handleEdit(infographic)} colorScheme="blue" size="sm">
+                      <Button
+                        onClick={() => handleEdit(infographic)}
+                        colorScheme="blue"
+                        size="sm"
+                      >
                         Edit
                       </Button>
                     </HStack>
@@ -421,17 +467,29 @@ const UrlInput = () => {
           <ModalHeader>Edit Infographic</ModalHeader>
           <ModalCloseButton />
           <ModalBody padding={0} display="flex" flexDirection="row">
-            <Box flex={2} overflowY="auto" padding={4} height="calc(100vh - 60px)">
-              <Image 
+            <Box
+              flex={2}
+              overflowY="auto"
+              padding={4}
+              height="calc(100vh - 60px)"
+            >
+              <Image
                 ref={editImageRef}
-                src={editingInfographic?.base64_image} 
-                alt="Editing Infographic" 
+                src={editingInfographic?.base64_image}
+                alt="Editing Infographic"
                 maxWidth="100%"
               />
             </Box>
-            <Box flex={1} overflowY="auto" padding={4} borderLeft="1px solid" borderColor="gray.200" height="calc(100vh - 60px)">
+            <Box
+              flex={1}
+              overflowY="auto"
+              padding={4}
+              borderLeft="1px solid"
+              borderColor="gray.200"
+              height="calc(100vh - 60px)"
+            >
               {localCustomizations && (
-                <EditMode 
+                <EditMode
                   initialSettings={localCustomizations}
                   onUpdate={handleLocalCustomizationUpdate}
                 />
@@ -439,10 +497,17 @@ const UrlInput = () => {
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSaveCustomizations} isLoading={isLoading}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={handleSaveCustomizations}
+              isLoading={isLoading}
+            >
               Save Changes
             </Button>
-            <Button variant="ghost" onClick={onEditClose}>Cancel</Button>
+            <Button variant="ghost" onClick={onEditClose}>
+              Cancel
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
