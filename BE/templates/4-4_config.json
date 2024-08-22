@@ -1,0 +1,101 @@
+{
+  "image": "4-4.png",
+  "fonts": {
+    "title": ["Montserrat-SemiBold", 25],
+    "subtitle": ["Poppins-Bold", 12],
+    "body": ["OpenSans_SemiCondensed-Light", 10]
+  },
+  "elements": {
+    "title": {
+      "width": 713.3,
+      "height": 180.1,
+      "x": 43.3,
+      "y": 93.5,
+      "color": "#000000",
+      "anchor": "middle",
+      "rotate": 0
+    },
+    "sections": [
+      {
+        "section": {
+          "width": 394.2,
+          "height": 41.1,
+          "x": 174.3,
+          "y": 442.8,
+          "color": "#000000",
+          "anchor": "left",
+          "rotate": 0
+        },
+        "content": {
+          "width": 542.2,
+          "height": 142.7,
+          "x": 80.0,
+          "y": 552.0,
+          "color": "#000000",
+          "anchor": "left",
+          "rotate": 0
+        }
+      },
+      {
+        "section": {
+          "width": 394.2,
+          "height": 41.1,
+          "x": 228.1,
+          "y": 848.0,
+          "color": "#000000",
+          "anchor": "middle",
+          "rotate": 0
+        },
+        "content": {
+          "width": 557.6,
+          "height": 142.7,
+          "x": 102.8,
+          "y": 957.2,
+          "color": "#000000",
+          "anchor": "right",
+          "rotate": 0
+        }
+      },
+      {
+        "section": {
+          "width": 394.2,
+          "height": 41.1,
+          "x": 174.3,
+          "y": 1253.2,
+          "color": "#000000",
+          "anchor": "left",
+          "rotate": 0
+        },
+        "content": {
+          "width": 616.0,
+          "height": 142.7,
+          "x": 80.0,
+          "y": 1362.3,
+          "color": "#000000",
+          "anchor": "left",
+          "rotate": 0
+        }
+      },
+      {
+        "section": {
+          "width": 394.2,
+          "height": 41.1,
+          "x": 228.1,
+          "y": 1658.3,
+          "color": "#000000",
+          "anchor": "middle",
+          "rotate": 0
+        },
+        "content": {
+          "width": 580.3,
+          "height": 142.7,
+          "x": 80.0,
+          "y": 1767.5,
+          "color": "#000000",
+          "anchor": "right",
+          "rotate": 0
+        }
+      }
+    ]
+  }
+}

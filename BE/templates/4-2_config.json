@@ -1,0 +1,101 @@
+{
+    "image": "4-2.png",
+    "fonts": {
+      "title": ["Fresca-Regular", 52],
+      "subtitle": ["Poppins-Bold", 20],
+      "body": ["Poppins-Light", 12]
+    },
+    "elements": {
+      "title": {
+        "width": 640.0,
+        "height": 192.7,
+        "x": 80.0,
+        "y": 80.0,
+        "color": "#ffffff",
+        "anchor": "middle",
+        "rotate": 0
+      },
+      "sections": [
+        {
+          "section": {
+            "width": 399.4,
+            "height": 48.0,
+            "x": 200.3,
+            "y": 381.9,
+            "color": "#000000",
+            "anchor": "middle",
+            "rotate": 0
+          },
+          "content": {
+            "width": 537.1,
+            "height": 150.5,
+            "x": 122.5,
+            "y": 442.2,
+            "color": "#000000",
+            "anchor": "left",
+            "rotate": 0
+          }
+        },
+        {
+          "section": {
+            "width": 399.4,
+            "height": 48.0,
+            "x": 200.3,
+            "y": 794.7,
+            "color": "#000000",
+            "anchor": "middle",
+            "rotate": 0
+          },
+          "content": {
+            "width": 537.1,
+            "height": 150.5,
+            "x": 131.4,
+            "y": 855.3,
+            "color": "#000000",
+            "anchor": "left",
+            "rotate": 0
+          }
+        },
+        {
+          "section": {
+            "width": 399.4,
+            "height": 48.0,
+            "x": 200.3,
+            "y": 1200.8,
+            "color": "#000000",
+            "anchor": "middle",
+            "rotate": 0
+          },
+          "content": {
+            "width": 537.1,
+            "height": 150.5,
+            "x": 122.5,
+            "y": 1269.8,
+            "color": "#000000",
+            "anchor": "left",
+            "rotate": 0
+          }
+        },
+        {
+          "section": {
+            "width": 399.4,
+            "height": 48.0,
+            "x": 200.3,
+            "y": 1606.2,
+            "color": "#000000",
+            "anchor": "middle",
+            "rotate": 0
+          },
+          "content": {
+            "width": 537.1,
+            "height": 150.5,
+            "x": 131.4,
+            "y": 1666.2,
+            "color": "#000000",
+            "anchor": "left",
+            "rotate": 0
+          }
+        }
+      ]
+    }
+  }

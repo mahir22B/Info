@@ -1,0 +1,74 @@
+{
+    "image": "3-1.png",
+    "fonts": {
+      "title": ["Arial", 25],
+      "subtitle": ["Arial", 12],
+      "body": ["Arial", 10]
+    },
+    "elements": {
+      "title": {
+        "width": 696.9,
+        "height": 305.6,
+        "x": 51.5,
+        "y": 80.0,
+        "color": "#000000",
+        "anchor": "middle"
+      },
+      "sections": [
+        {
+          "section": {
+            "width": 272.6,
+            "height": 103.8,
+            "x": 397.6,
+            "y": 518.4,
+            "color": "#000000",
+            "anchor": "left"
+          },
+          "content": {
+            "width": 272.2,
+            "height": 204.4,
+            "x": 397.8,
+            "y": 641.6,
+            "color": "#000000",
+            "anchor": "left"
+          }
+        },
+        {
+          "section": {
+            "width": 272.6,
+            "height": 103.8,
+            "x": 129.8,
+            "y": 949.2,
+            "color": "#000000",
+            "anchor": "left"
+          },
+          "content": {
+            "width": 272.2,
+            "height": 204.4,
+            "x": 130.0,
+            "y": 1072.5,
+            "color": "#000000",
+            "anchor": "left"
+          }
+        },
+        {
+          "section": {
+            "width": 272.6,
+            "height": 103.8,
+            "x": 397.6,
+            "y": 1380.1,
+            "color": "#000000",
+            "anchor": "left"
+          },
+          "content": {
+            "width": 272.2,
+            "height": 204.4,
+            "x": 397.8,
+            "y": 1503.3,
+            "color": "#000000",
+            "anchor": "left"
+          }
+        }
+      ]
+    }
+  }
