@@ -1,74 +1,81 @@
 {
-    "image": "3-1.png",
-    "fonts": {
-      "title": ["Arial", 25],
-      "subtitle": ["Arial", 12],
-      "body": ["Arial", 10]
+  "image": "3-1.png",
+  "fonts": {
+    "title": ["JosefinSans-Regular", 80],
+    "subtitle": ["JosefinSans-Regular", 24],
+    "body": ["JosefinSans-Regular", 20]
+  },
+  "elements": {
+    "title": {
+      "width": 640.0,
+      "height": 383.1,
+      "x": 80.0,
+      "y": 39.9,
+      "color": "#ffffff",
+      "anchor": "middle",
+      "rotate": 0
     },
-    "elements": {
-      "title": {
-        "width": 696.9,
-        "height": 305.6,
-        "x": 51.5,
-        "y": 80.0,
-        "color": "#000000",
-        "anchor": "middle"
-      },
-      "sections": [
-        {
-          "section": {
-            "width": 272.6,
-            "height": 103.8,
-            "x": 397.6,
-            "y": 518.4,
-            "color": "#000000",
-            "anchor": "left"
-          },
-          "content": {
-            "width": 272.2,
-            "height": 204.4,
-            "x": 397.8,
-            "y": 641.6,
-            "color": "#000000",
-            "anchor": "left"
-          }
+    "sections": [
+      {
+        "section": {
+          "width": 553.3,
+          "height": 45.5,
+          "x": 123.3,
+          "y": 580.3,
+          "color": "#cbfc01",
+          "anchor": "left",
+          "rotate": 0
         },
-        {
-          "section": {
-            "width": 272.6,
-            "height": 103.8,
-            "x": 129.8,
-            "y": 949.2,
-            "color": "#000000",
-            "anchor": "left"
-          },
-          "content": {
-            "width": 272.2,
-            "height": 204.4,
-            "x": 130.0,
-            "y": 1072.5,
-            "color": "#000000",
-            "anchor": "left"
-          }
-        },
-        {
-          "section": {
-            "width": 272.6,
-            "height": 103.8,
-            "x": 397.6,
-            "y": 1380.1,
-            "color": "#000000",
-            "anchor": "left"
-          },
-          "content": {
-            "width": 272.2,
-            "height": 204.4,
-            "x": 397.8,
-            "y": 1503.3,
-            "color": "#000000",
-            "anchor": "left"
-          }
+        "content": {
+          "width": 553.3,
+          "height": 228.0,
+          "x": 123.3,
+          "y": 647.7,
+          "color": "#ffffff",
+          "anchor": "left",
+          "rotate": 0
         }
-      ]
-    }
+      },
+      {
+        "section": {
+          "width": 553.3,
+          "height": 45.5,
+          "x": 123.3,
+          "y": 1045.8,
+          "color": "#cbfc01",
+          "anchor": "left",
+          "rotate": 0
+        },
+        "content": {
+          "width": 553.3,
+          "height": 228.0,
+          "x": 123.3,
+          "y": 1113.2,
+          "color": "#ffffff",
+          "anchor": "left",
+          "rotate": 0
+        }
+      },
+      {
+        "section": {
+          "width": 553.3,
+          "height": 45.5,
+          "x": 123.3,
+          "y": 1510.9,
+          "color": "#cbfc01",
+          "anchor": "left",
+          "rotate": 0
+        },
+        "content": {
+          "width": 553.3,
+          "height": 266.0,
+          "x": 123.3,
+          "y": 1578.3,
+          "color": "#ffffff",
+          "anchor": "left",
+          "rotate": 0
+        }
+      }
+    ]
   }
+}
