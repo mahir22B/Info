@@ -817,7 +817,7 @@ const UrlInput = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch(`https://www.instagraphix.pro/api/user`, {
+        const response = await fetch('https://www.instagraphix.pro/api/user', {
           credentials: 'include'
         });
         if (response.ok) {
@@ -843,7 +843,6 @@ const UrlInput = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      console.log(e.clientX);
       if (e.clientX <= 60) {
         setIsSidebarOpen(true);
       } else if (e.clientX > 200 && !sidebarRef.current?.contains(e.target)) {
@@ -1153,7 +1152,7 @@ const UrlInput = () => {
                 </VStack>
               ) : (
                 <Button onClick={handleGoogleLogin} colorScheme="blue">
-                  Login with Google
+                  Login Now with Google!!
                 </Button>
               )}
             </DrawerBody>
