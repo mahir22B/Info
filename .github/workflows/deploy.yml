@@ -1,0 +1,38 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
+    - name: Deploy to DigitalOcean
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+      run: |
+        ssh $USERNAME@$HOST << EOF
+          cd /root/Info
+          git pull origin main
+          # Install dependencies
+          pip install -r requirements.txt
+          # Build frontend assets (if needed)
+          cd src
+          npm install
+          npm run build
+          cd ..
+          # Restart Gunicorn
+          sudo systemctl restart gunicorn
+        EOF
