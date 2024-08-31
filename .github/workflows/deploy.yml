@@ -43,8 +43,20 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate
 
+          echo "Creating new requirements file with compatible versions"
+          cat << EOT > requirements_compatible.txt
+          httpx==0.23.0
+          anthropic==0.31.2
+          jupyterlab==4.2.1
+          openai==1.17.0
+          postgrest==0.16.2
+          postgrest-py==0.4.0
+          # Add other dependencies from your original requirements.txt, 
+          # but make sure to use compatible versions
+          EOT
+
           echo "Installing Python dependencies"
-          pip install -r requirements.txt
+          pip install -r requirements_compatible.txt
           pip install flask gunicorn
 
           echo "Building frontend assets"
