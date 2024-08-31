@@ -25,18 +25,39 @@ jobs:
       run: |
         ssh $USERNAME@$HOST << EOF
           cd /root/Info
+
+          # Ensure python3-venv is installed
+          sudo apt-get update && sudo apt-get install python3-venv -y
+
+          # Pull latest changes
           git pull origin main
+
+          # Navigate to BE directory
+          cd BE
+
+          # Create and activate virtual environment
+          python3 -m venv venv
+          source venv/bin/activate
+
           # Install dependencies
           pip install -r requirements.txt
           pip install flask gunicorn  # Ensure Flask and Gunicorn are installed
+
+          # Navigate back to main directory for frontend build
+          cd ..
+
           # Build frontend assets (if needed)
           cd src
           npm install
           npm run build
           cd ..
+
           # Start or restart Gunicorn
           pkill gunicorn || true  # Kill any running Gunicorn processes
           cd BE
-          nohup gunicorn --bind 0.0.0.0:8000 app:app > gunicorn.log 2>&1 &
+          nohup venv/bin/gunicorn --bind 0.0.0.0:8000 app:app > gunicorn.log 2>&1 &
           echo "Gunicorn started. Check gunicorn.log for output."
+
+          # Deactivate virtual environment
+          deactivate
         EOF
