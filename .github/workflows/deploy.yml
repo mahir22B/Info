@@ -33,6 +33,20 @@ jobs:
           npm install
           npm run build
           cd ..
-          # Restart Gunicorn
-          sudo systemctl restart gunicorn
+          # Check if Gunicorn is installed
+          if ! command -v gunicorn &> /dev/null
+          then
+              echo "Gunicorn not found. Installing..."
+              pip install gunicorn
+          fi
+          # Check if Gunicorn service exists
+          if systemctl list-unit-files | grep -q gunicorn
+          then
+              echo "Restarting Gunicorn service..."
+              sudo systemctl restart gunicorn
+          else
+              echo "Gunicorn service not found. Starting Gunicorn manually..."
+              # Adjust the following line based on your project structure
+              gunicorn --bind 0.0.0.0:8000 app:app &
+          fi
         EOF
