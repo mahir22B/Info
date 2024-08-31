@@ -28,25 +28,15 @@ jobs:
           git pull origin main
           # Install dependencies
           pip install -r requirements.txt
+          pip install flask gunicorn  # Ensure Flask and Gunicorn are installed
           # Build frontend assets (if needed)
           cd src
           npm install
           npm run build
           cd ..
-          # Check if Gunicorn is installed
-          if ! command -v gunicorn &> /dev/null
-          then
-              echo "Gunicorn not found. Installing..."
-              pip install gunicorn
-          fi
-          # Check if Gunicorn service exists
-          if systemctl list-unit-files | grep -q gunicorn
-          then
-              echo "Restarting Gunicorn service..."
-              sudo systemctl restart gunicorn
-          else
-              echo "Gunicorn service not found. Starting Gunicorn manually..."
-              # Adjust the following line based on your project structure
-              gunicorn --bind 0.0.0.0:8000 app:app &
-          fi
+          # Start or restart Gunicorn
+          pkill gunicorn || true  # Kill any running Gunicorn processes
+          cd BE
+          nohup gunicorn --bind 0.0.0.0:8000 app:app > gunicorn.log 2>&1 &
+          echo "Gunicorn started. Check gunicorn.log for output."
         EOF
