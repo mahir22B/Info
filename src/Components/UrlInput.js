@@ -1035,8 +1035,8 @@ const UrlInput = () => {
   if (!user) {
     return (
       <Center height="100vh">
-        <Button onClick={handleGoogleLogin} colorScheme="red" size="lg">
-          Login with Google Now!!
+        <Button onClick={handleGoogleLogin} colorScheme="blue" size="lg">
+          Login with Google
         </Button>
       </Center>
     );
@@ -1152,7 +1152,7 @@ const UrlInput = () => {
                 </VStack>
               ) : (
                 <Button onClick={handleGoogleLogin} colorScheme="blue">
-                  Login with Google Now 2!!
+                  Login with Google
                 </Button>
               )}
             </DrawerBody>
