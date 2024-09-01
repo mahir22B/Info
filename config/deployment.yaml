@@ -1,0 +1,26 @@
+name: info-app
+services:
+  - name: frontend
+    github:
+      repo: mahirB22/Info
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    source_dir: /
+    http_port: 80
+    routes:
+      - path: /
+    envs:
+      - key: REACT_APP_API_URL
+        value: ${backend.PRIVATE_URL}
+
+  - name: backend
+    github:
+      repo: mahirB22/Info
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: BE/Dockerfile
+    source_dir: BE/
+    http_port: 5000
+    routes:
+      - path: /api
