@@ -1036,7 +1036,7 @@ const UrlInput = () => {
     return (
       <Center height="100vh">
         <Button onClick={handleGoogleLogin} colorScheme="blue" size="lg">
-          Login with Google
+          Login with Google Now!!
         </Button>
       </Center>
     );
@@ -1151,12 +1151,9 @@ const UrlInput = () => {
                   </Button>
                 </VStack>
               ) : (
-                <>
-                <h1>Yes we can see</h1>
                 <Button onClick={handleGoogleLogin} colorScheme="blue">
-                  Login Now Click!!!
+                  Login with Google
                 </Button>
-                </>
               )}
             </DrawerBody>
           </DrawerContent>
