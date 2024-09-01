@@ -40,8 +40,6 @@ jobs:
           pip install flask gunicorn
           cd ..
 
-          # Navigate to the src directory
-          cd src
 
           # Install frontend dependencies and build
           npm install
