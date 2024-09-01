@@ -6,11 +6,23 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies and build
+      run: |
+        cd src
+        npm ci
+        npm run build
+        cd ..
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -23,11 +35,13 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
       run: |
+        # Copy build files to droplet
+        scp -r src/build/* $USERNAME@$HOST:/var/www/myapp/
+
         ssh $USERNAME@$HOST << EOF
           # Navigate to your project directory
           cd /root/Info
-          echo "Current directory: $(pwd)"
-          
+
           # Pull the latest changes
           git pull origin main
 
@@ -40,42 +54,6 @@ jobs:
           pip install -r requirements.txt
           pip install flask gunicorn
           cd ..
-
-          # Navigate to the src directory
-          cd src
-          echo "Current directory before npm build: $(pwd)"
-
-          # Install frontend dependencies and build
-          npm install
-          npm run build
-
-          # Debug: List contents of current directory and parent directory
-          echo "Contents of src directory:"
-          ls -la
-          echo "Contents of parent directory:"
-          ls -la ..
-
-          # Navigate back to the project root
-          cd ..
-          echo "Current directory after build: $(pwd)"
-
-          # Check if build directory exists and is not empty
-          if [ -d "build" ]; then
-            echo "Build directory exists"
-            echo "Contents of build directory:"
-            ls -la build
-            if [ "$(ls -A build)" ]; then
-              # Copy built frontend assets to the Nginx root directory
-              sudo cp -r build/* /var/www/myapp/
-              echo "Frontend files copied successfully"
-            else
-              echo "Build directory is empty"
-              exit 1
-            fi
-          else
-            echo "Build directory is missing in project root"
-            exit 1
-          fi
 
           # Set up Gunicorn service if it doesn't exist
           if [ ! -f "/etc/systemd/system/gunicorn.service" ]; then
@@ -100,13 +78,6 @@ jobs:
 
           # Restart Nginx
           sudo systemctl restart nginx
-
-          # Check services status
-          echo "Checking Gunicorn status:"
-          sudo systemctl status gunicorn
-          
-          echo "Checking Nginx status:"
-          sudo systemctl status nginx
 
           echo "Deployment completed. Gunicorn and Nginx restarted."
 
