@@ -6,34 +6,11 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-
-    - name: Install dependencies and build
-      run: |
-        echo "Current directory: $(pwd)"
-        ls -R
-        cd src
-        npm ci
-        npm run build
-        cd ..
-        echo "After build, current directory: $(pwd)"
-        ls -R
-      env:
-        CI: false
-
-    - name: Debug directory structure
-      run: |
-        echo "Current directory: $(pwd)"
-        ls -R
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -46,69 +23,26 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
       run: |
-        set -e
-        echo "Copying build files to droplet..."
-        if [ -d "src/build" ]; then
-          scp -r src/build/* $USERNAME@$HOST:/var/www/myapp/ || { echo "SCP failed"; exit 1; }
-        elif [ -d "build" ]; then
-          scp -r build/* $USERNAME@$HOST:/var/www/myapp/ || { echo "SCP failed"; exit 1; }
-        else
-          echo "Build directory not found"
-          ls -R
-          exit 1
-        fi
-
         ssh $USERNAME@$HOST << EOF
-          set -e
-          echo "Connected to droplet"
-          cd /root/Info || { echo "Failed to change directory"; exit 1; }
-          echo "Current directory: \$(pwd)"
-
-          echo "Pulling latest changes..."
-          git pull origin main || { echo "Git pull failed"; exit 1; }
-
-          echo "Setting up Python virtual environment..."
-          python3 -m venv venv || { echo "Failed to create venv"; exit 1; }
-          source venv/bin/activate || { echo "Failed to activate venv"; exit 1; }
-
-          echo "Installing backend dependencies..."
-          cd BE || { echo "Failed to change to BE directory"; exit 1; }
-          pip install -r requirements.txt || { echo "Failed to install requirements"; exit 1; }
-          pip install flask gunicorn || { echo "Failed to install Flask and Gunicorn"; exit 1; }
-          cd ..
-
-          echo "Setting up Gunicorn service..."
-          if [ ! -f "/etc/systemd/system/gunicorn.service" ]; then
-            sudo tee /etc/systemd/system/gunicorn.service > /dev/null <<EOT
-          [Unit]
-          Description=Gunicorn instance to serve your Flask application
-          After=network.target
-
-          [Service]
-          User=root
-          WorkingDirectory=/root/Info/BE
-          ExecStart=/root/Info/venv/bin/gunicorn --workers 3 --bind unix:app.sock -m 007 app:app
-
-          [Install]
-          WantedBy=multi-user.target
-          EOT
-            sudo systemctl daemon-reload || { echo "Failed to reload systemd"; exit 1; }
-          fi
-
-          echo "Restarting Gunicorn..."
-          sudo systemctl restart gunicorn || { echo "Failed to restart Gunicorn"; exit 1; }
-
-          echo "Restarting Nginx..."
-          sudo systemctl restart nginx || { echo "Failed to restart Nginx"; exit 1; }
-
+          cd /root/Info
+          git pull origin main
+          
+          # Install backend dependencies
+          pip install -r requirements.txt
+          pip install flask gunicorn
+          
+          # Build frontend assets
+          npm install
+          npm run build
+          
+          # Copy built frontend assets to the correct location
+          cp -r build/* /var/www/html/  # Adjust this path as needed
+          
+          # Restart Gunicorn
+          sudo systemctl restart gunicorn
+          
+          # Restart Nginx (if you're using it)
+          sudo systemctl restart nginx
+          
           echo "Deployment completed. Gunicorn and Nginx restarted."
-
-          echo "Recent Nginx error log entries:"
-          sudo tail -n 20 /var/log/nginx/error.log
-
-          echo "Recent API error log entries:"
-          sudo tail -n 20 /var/log/nginx/api_error.log
-
-          echo "Files in /var/www/myapp:"
-          ls -l /var/www/myapp/
         EOF
