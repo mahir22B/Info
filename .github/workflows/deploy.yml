@@ -35,9 +35,10 @@ jobs:
           source venv/bin/activate
 
           # Install backend dependencies
-          pip install -r requirements.txt
           pip install flask gunicorn
 
+          # Navigate to the src directory
+          cd src
 
           # Install frontend dependencies and build
           npm install
@@ -49,7 +50,7 @@ jobs:
             sudo cp -r build/* /var/www/myapp/
             echo "Frontend files copied successfully"
           else
-            echo "Build directory is missing or empty"
+            echo "Build directory is missing or empty in src folder"
             exit 1
           fi
 
