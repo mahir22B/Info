@@ -1,8 +1,8 @@
-name: info-app
+name: octopus-app
 services:
   - name: frontend
     github:
-      repo: mahirB22/Info
+      repo: mahir22B/Info
       branch: main
       deploy_on_push: true
     dockerfile_path: Dockerfile
@@ -10,13 +10,10 @@ services:
     http_port: 80
     routes:
       - path: /
-    envs:
-      - key: REACT_APP_API_URL
-        value: ${backend.PRIVATE_URL}
 
   - name: backend
     github:
-      repo: mahirB22/Info
+      repo: mahir22B/Info
       branch: main
       deploy_on_push: true
     dockerfile_path: BE/Dockerfile
