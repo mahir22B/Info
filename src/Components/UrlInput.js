@@ -45,7 +45,7 @@ import { InfoIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { HamburgerIcon, HomeIcon, HistoryIcon, SettingsIcon, QuestionIcon, AddIcon } from '@chakra-ui/icons';
 import PricingModal from './PricingModal';
 
-// const API_URL = "http://localhost:5000";
+const API_URL = "http://localhost:5000";
 
 // const EditMode = ({ initialSettings, onUpdate }) => {
 //   const [fontSettings, setFontSettings] = useState(initialSettings);
@@ -563,9 +563,9 @@ const GenerateFromScratch = ({ onCreditsUpdate }) => {
   const handleGenerate = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://www.instagraphix.pro/api/generate_from_scratch', {
+      const response = await fetch('http://localhost:5000/api/generate_from_scratch', {
         method: 'POST',
-        headers: {  
+        headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -584,7 +584,7 @@ const GenerateFromScratch = ({ onCreditsUpdate }) => {
       
       // Fetch config files for each infographic
       const infographicsWithConfig = await Promise.all(data.infographics.map(async (infographic) => {
-        const configResponse = await fetch(`https://www.instagraphix.pro/api/get_config/${infographic.template_name}`);
+        const configResponse = await fetch(`http://localhost:5000/api/get_config/${infographic.template_name}`);
         if (!configResponse.ok) {
           throw new Error(`Failed to fetch config for ${infographic.template_name}`);
         }
@@ -817,7 +817,7 @@ const UrlInput = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch('https://www.instagraphix.pro/api/user', {
+        const response = await fetch(`${API_URL}/api/user`, {
           credentials: 'include'
         });
         if (response.ok) {
@@ -834,11 +834,11 @@ const UrlInput = () => {
   }, []);
 
   const handleGoogleLogin = () => {
-    window.location.href = `https://www.instagraphix.pro/login/google`;
+    window.location.href = `${API_URL}/login/google`;
   };
 
   const handleLogout = () => {
-    window.location.href = `https://www.instagraphix.pro/logout`;
+    window.location.href = `${API_URL}/logout`;
   };  
 
   useEffect(() => {
@@ -880,7 +880,7 @@ const UrlInput = () => {
     setInfographics([]);
   
     try {
-      const response = await fetch('https://www.instagraphix.pro/api/generate_infographic', {
+      const response = await fetch('http://localhost:5000/api/generate_infographic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -912,7 +912,7 @@ const UrlInput = () => {
       }
   
       const infographicsWithConfig = await Promise.all(data.infographics.map(async (infographic) => {
-        const configResponse = await fetch(`https://www.instagraphix.pro/api/get_config/${infographic.template_name}`);
+        const configResponse = await fetch(`http://localhost:5000/api/get_config/${infographic.template_name}`);
         if (!configResponse.ok) {
           throw new Error(`Failed to fetch config for ${infographic.template_name}`);
         }
@@ -986,7 +986,7 @@ const UrlInput = () => {
   
     setIsLoading(true);
     try {
-      const response = await fetch('http://www.instagraphix.pro/api/finalize_infographic', {
+      const response = await fetch('http://localhost:5000/api/finalize_infographic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

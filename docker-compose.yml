@@ -1,0 +1,25 @@
+version: '3'
+services:
+  backend:
+    build: ./BE
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=Infographic_User
+      - POSTGRES_PASSWORD=Chmika2442*
+      - POSTGRES_DB=infographic
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
