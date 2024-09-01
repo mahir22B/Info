@@ -35,7 +35,10 @@ jobs:
           source venv/bin/activate
 
           # Install backend dependencies
+          cd BE
+          pip install -r requirements.txt
           pip install flask gunicorn
+          cd ..
 
           # Navigate to the src directory
           cd src
@@ -44,18 +47,18 @@ jobs:
           npm install
           npm run build
 
+          # Navigate back to the project root
+          cd ..
+
           # Check if build directory exists and is not empty
           if [ -d "build" ] && [ "$(ls -A build)" ]; then
             # Copy built frontend assets to the Nginx root directory
             sudo cp -r build/* /var/www/myapp/
             echo "Frontend files copied successfully"
           else
-            echo "Build directory is missing or empty in src folder"
+            echo "Build directory is missing or empty in project root"
             exit 1
           fi
-
-          # Navigate back to the project root
-          cd ..
 
           # Set up Gunicorn service if it doesn't exist
           if [ ! -f "/etc/systemd/system/gunicorn.service" ]; then
