@@ -30,31 +30,57 @@ jobs:
           # Pull the latest changes
           git pull origin main
 
+          # Set up and use Python virtual environment
+          python3 -m venv venv
+          source venv/bin/activate
+
           # Install backend dependencies
           pip install -r requirements.txt
           pip install flask gunicorn
 
-          # Navigate to the frontend directory
-          cd src
 
           # Install frontend dependencies and build
           npm install
           npm run build
 
-          # Copy built frontend assets to the Nginx root directory
-          sudo cp -r build/* /var/www/myapp/
+          # Check if build directory exists and is not empty
+          if [ -d "build" ] && [ "$(ls -A build)" ]; then
+            # Copy built frontend assets to the Nginx root directory
+            sudo cp -r build/* /var/www/myapp/
+            echo "Frontend files copied successfully"
+          else
+            echo "Build directory is missing or empty"
+            exit 1
+          fi
 
           # Navigate back to the project root
           cd ..
 
+          # Set up Gunicorn service if it doesn't exist
+          if [ ! -f "/etc/systemd/system/gunicorn.service" ]; then
+            sudo tee /etc/systemd/system/gunicorn.service > /dev/null <<EOT
+          [Unit]
+          Description=Gunicorn instance to serve your Flask application
+          After=network.target
+
+          [Service]
+          User=root
+          WorkingDirectory=/root/Info/BE
+          ExecStart=/root/Info/venv/bin/gunicorn --workers 3 --bind unix:app.sock -m 007 app:app
+
+          [Install]
+          WantedBy=multi-user.target
+          EOT
+            sudo systemctl daemon-reload
+          fi
+
           # Restart Gunicorn
-          # Assuming you have a systemd service for Gunicorn
           sudo systemctl restart gunicorn
 
           # Restart Nginx
           sudo systemctl restart nginx
 
-          # Optional: Check if services are running
+          # Check services status
           echo "Checking Gunicorn status:"
           sudo systemctl status gunicorn
           
@@ -63,14 +89,14 @@ jobs:
 
           echo "Deployment completed. Gunicorn and Nginx restarted."
 
-          # Optional: Display recent log entries
+          # Display recent log entries
           echo "Recent Nginx error log entries:"
           sudo tail -n 20 /var/log/nginx/error.log
 
           echo "Recent API error log entries:"
           sudo tail -n 20 /var/log/nginx/api_error.log
 
-          # Optional: List files in the deployment directory
+          # List files in the deployment directory
           echo "Files in /var/www/myapp:"
           ls -l /var/www/myapp/
         EOF
