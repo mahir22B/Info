@@ -1,23 +1,32 @@
-version: '3'
+version: '3.8'
+
 services:
   backend:
-    build: ./BE
+    build: 
+      context: ./BE
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/mydb
     depends_on:
       - db
+
   frontend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - backend
+
   db:
     image: postgres:13
     environment:
-      - POSTGRES_USER=Infographic_User
-      - POSTGRES_PASSWORD=Chmika2442*
-      - POSTGRES_DB=infographic
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
