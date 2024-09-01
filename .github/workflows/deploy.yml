@@ -19,12 +19,21 @@ jobs:
 
     - name: Install dependencies and build
       run: |
+        echo "Current directory: $(pwd)"
+        ls -R
         cd src
         npm ci
         npm run build
         cd ..
+        echo "After build, current directory: $(pwd)"
+        ls -R
       env:
         CI: false
+
+    - name: Debug directory structure
+      run: |
+        echo "Current directory: $(pwd)"
+        ls -R
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -39,7 +48,15 @@ jobs:
       run: |
         set -e
         echo "Copying build files to droplet..."
-        scp -r src/build/* $USERNAME@$HOST:/var/www/myapp/ || { echo "SCP failed"; exit 1; }
+        if [ -d "src/build" ]; then
+          scp -r src/build/* $USERNAME@$HOST:/var/www/myapp/ || { echo "SCP failed"; exit 1; }
+        elif [ -d "build" ]; then
+          scp -r build/* $USERNAME@$HOST:/var/www/myapp/ || { echo "SCP failed"; exit 1; }
+        else
+          echo "Build directory not found"
+          ls -R
+          exit 1
+        fi
 
         ssh $USERNAME@$HOST << EOF
           set -e
