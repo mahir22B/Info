@@ -1035,7 +1035,7 @@ const UrlInput = () => {
   if (!user) {
     return (
       <Center height="100vh">
-        <Button onClick={handleGoogleLogin} colorScheme="blue" size="lg">
+        <Button onClick={handleGoogleLogin} colorScheme="red" size="lg">
           Login with Google Now!!
         </Button>
       </Center>
