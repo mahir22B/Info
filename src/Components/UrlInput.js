@@ -1152,7 +1152,7 @@ const UrlInput = () => {
                 </VStack>
               ) : (
                 <Button onClick={handleGoogleLogin} colorScheme="blue">
-                  Login with Google
+                  Login with Google Now 2!!
                 </Button>
               )}
             </DrawerBody>
