@@ -20,16 +20,19 @@ import time
 from bs4 import BeautifulSoup
 import traceback
 import requests
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
-app.secret_key = 'os.urandom(24).hex()'
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
 oauth = OAuth(app)
 
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://Infographic_User:Chmika2442*@localhost:5432/infographic'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
@@ -58,12 +61,12 @@ google = oauth.register(
 
 
 SCRAPING_ROBOT_API_URL = 'https://api.scrapingrobot.com/'
-API_TOKEN = 'b42fd405-a2b6-4e34-a41c-ee62806b73da'
+API_TOKEN = os.getenv('SCRAPING_ROBOT_API_TOKEN')
 
-client = anthropic.Anthropic(api_key="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")
+client = anthropic.Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
 
-LEMON_SQUEEZY_API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NGQ1OWNlZi1kYmI4LTRlYTUtYjE3OC1kMjU0MGZjZDY5MTkiLCJqdGkiOiJkNTNmNWJmZTc5ZWUxOGM1YTMyN2MxMmM5NTBlOTkxYTZmNTM1MGJlZTVjMDNmYTUzZTcyYzU3NmE3NTU0NTIzMTVjNWJhNDRiODM1YzZiYiIsImlhdCI6MTcyMzg1NDIxOS41NzczODQsIm5iZiI6MTcyMzg1NDIxOS41NzczODcsImV4cCI6MjAzOTM4NzAxOS41NDIwODIsInN1YiI6IjMwMzU4MzIiLCJzY29wZXMiOltdfQ.FlCDynswfCYCJ_d2PkvVrMUgCL0DFUcQxVR9JvUPdE3wz46eHi4hXAJdH1oxotaVs5LqvDD12J0HGZG528ku0dTSHBDt6ZNaigEHi-A8YQEAkzGhhhbEIswR9klzt5JUsTl9_Bn0SYH58lGV8tU62A98yZ5DikokU3ExqptbT4ioaKYsEnUpg5dyK0J7BHhi-Sp0SFM6i8DyjgH6SwSWuVbjJk_jIPeW-vt5mycgnTu-iicC9NigTs_nNUIQMpMxlInxET6db3UQwamCsVgYH4FN2LYrYQhaLd3QMcUPXqVbJ7wnVQGxudQ5NhkdqYdyMnmPr3ea_Iuj_91AspJUtaWVaO3w9QtQxdOQR9vi0qijQq-UF42otZAi-h8Lu9zjJFuHspdAl6bTTUQJtJjWK0KeJ9NlNoOZTl_yn68O8AaZuOxtyauncKURMc2Msf5ObFKoT9grww-lU8aIElBWzrBRHbEadTS6u5IJiKRyNSRFwmks4Eu3GsssuluORI37'
-LEMON_SQUEEZY_STORE_ID = '117195'
+LEMON_SQUEEZY_API_KEY = os.getenv('LEMON_SQUEEZY_API_KEY')
+LEMON_SQUEEZY_STORE_ID = os.getenv('LEMON_SQUEEZY_STORE_ID')
 
 # User model
 class User(db.Model):
