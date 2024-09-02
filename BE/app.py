@@ -23,7 +23,7 @@ import requests
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://www.instagraphix.pro"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": ["https://www.instagraphix.pro","https://instagraphix.pro"]}}, supports_credentials=True)
 app.secret_key = 'os.urandom(24).hex()'
 oauth = OAuth(app)
 
@@ -1093,4 +1093,4 @@ def finalize_infographic(user):
         return jsonify({'error': f'Error finalizing infographic: {str(e)}'}), 500
     
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080)
+    app.run(host='0.0.0.0', port=8080)
