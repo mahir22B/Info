@@ -580,6 +580,7 @@ def scrape_text(url):
 
 @app.route('/api/user')
 def get_user():
+    app.logger.debug("Received request to /api/user")
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         return jsonify({
