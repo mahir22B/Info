@@ -45,7 +45,7 @@ import { InfoIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { HamburgerIcon, HomeIcon, HistoryIcon, SettingsIcon, QuestionIcon, AddIcon } from '@chakra-ui/icons';
 import PricingModal from './PricingModal';
 
-const API_URL = "https://www.instagraphix.pro";
+const BASE_URL = "https://www.instagraphix.pro";
 
 // const EditMode = ({ initialSettings, onUpdate }) => {
 //   const [fontSettings, setFontSettings] = useState(initialSettings);
@@ -817,7 +817,7 @@ const UrlInput = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/user`, {
+        const response = await fetch(`${BASE_URL}/api/user`, {
           credentials: 'include'
         });
         if (response.ok) {
@@ -834,11 +834,11 @@ const UrlInput = () => {
   }, []);
 
   const handleGoogleLogin = () => {
-    window.location.href = `${API_URL}/login/google`;
+    window.location.href = `${BASE_URL}/login/google`;
   };
 
   const handleLogout = () => {
-    window.location.href = `${API_URL}/logout`;
+    window.location.href = `${BASE_URL}/logout`;
   };  
 
   useEffect(() => {
