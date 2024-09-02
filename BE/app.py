@@ -23,7 +23,7 @@ import requests
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "https://www.instagraphix.pro"}}, supports_credentials=True)
 app.secret_key = 'os.urandom(24).hex()'
 oauth = OAuth(app)
 
@@ -34,7 +34,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 db = SQLAlchemy(app)
@@ -42,6 +42,19 @@ migrate = Migrate(app, db)
 
 
 # Google OAuth configuration
+# google = oauth.register(
+#     name='google',
+#     client_id='194431053746-ouf0f33qmfq29dv1qku6e42huu4lr038.apps.googleusercontent.com',
+#     client_secret='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',
+#     access_token_url='https://accounts.google.com/o/oauth2/token',
+#     access_token_params=None,
+#     authorize_url='https://accounts.google.com/o/oauth2/auth',
+#     authorize_params=None,
+#     api_base_url='https://www.googleapis.com/oauth2/v1/',
+#     client_kwargs={'scope': 'openid email profile'},
+#     jwks_uri = "https://www.googleapis.com/oauth2/v3/certs"
+# )
+
 google = oauth.register(
     name='google',
     client_id='194431053746-ouf0f33qmfq29dv1qku6e42huu4lr038.apps.googleusercontent.com',
@@ -54,7 +67,6 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile'},
     jwks_uri = "https://www.googleapis.com/oauth2/v3/certs"
 )
-
 
 
 SCRAPING_ROBOT_API_URL = 'https://api.scrapingrobot.com/'
@@ -621,7 +633,7 @@ def authorized():
         session['user_id'] = user.id
         
         # Redirect to frontend
-        return redirect('http://localhost:3000')
+        return redirect('https://www.instagraphix.com')
     except Exception as e:
         print(f"Error in Google callback: {str(e)}")
         return jsonify({'error': 'Authentication failed'}), 400
@@ -637,7 +649,7 @@ def index():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.clear()
-    return redirect('http://localhost:3000')
+    return redirect('https://www.instagraphix.com')
 
 
 
@@ -692,7 +704,7 @@ def get_lemon_squeezy_products(user):
 
 
 @app.route('/api/generate_infographic', methods=['POST'])
-@cross_origin(origins=["http://localhost:3000"], supports_credentials=True)
+@cross_origin(origins=["https://www.instagraphix.com"], supports_credentials=True)
 @token_required
 def generate_infographic(user):
     try:
@@ -882,7 +894,7 @@ from jsonschema import validate, ValidationError
 import traceback
 
 @app.route('/api/generate_from_scratch', methods=['POST'])
-@cross_origin(origins=["http://localhost:3000"], supports_credentials=True)
+@cross_origin(origins=["https://www.instagraphix.com"], supports_credentials=True)
 @token_required
 def generate_from_scratch(user):
     try:
