@@ -15,7 +15,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-const API_URL = "http://instagraphix.pro:5000";
+const API_URL = "https://instagraphix.pro:5000";
 
 const hardcodedProducts = [
   {
