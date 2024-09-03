@@ -26,7 +26,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "http://instagraphix.pro"}}, supports_credentials=True)
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 oauth = OAuth(app)
 
@@ -624,7 +624,7 @@ def authorized():
         session['user_id'] = user.id
         
         # Redirect to frontend
-        return redirect('http://localhost:3000')
+        return redirect('http://instagraphix.pro')
     except Exception as e:
         print(f"Error in Google callback: {str(e)}")
         return jsonify({'error': 'Authentication failed'}), 400
@@ -640,7 +640,7 @@ def index():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.clear()
-    return redirect('http://localhost:3000')
+    return redirect('http://instagraphix.pro')
 
 
 
@@ -695,7 +695,7 @@ def get_lemon_squeezy_products(user):
 
 
 @app.route('/api/generate_infographic', methods=['POST'])
-@cross_origin(origins=["http://localhost:3000"], supports_credentials=True)
+@cross_origin(origins=["http://instagraphix.pro"], supports_credentials=True)
 @token_required
 def generate_infographic(user):
     try:
@@ -782,7 +782,7 @@ def get_config(template_name):
 
 
 # @app.route('/api/generate_from_scratch', methods=['POST'])
-# @cross_origin(origins=["http://localhost:3000"], supports_credentials=True)
+# @cross_origin(origins=["http://instagraphix.pro"], supports_credentials=True)
 # @token_required
 # def generate_from_scratch(user):
 #     try:
@@ -885,7 +885,7 @@ from jsonschema import validate, ValidationError
 import traceback
 
 @app.route('/api/generate_from_scratch', methods=['POST'])
-@cross_origin(origins=["http://localhost:3000"], supports_credentials=True)
+@cross_origin(origins=["http://instagraphix.pro"], supports_credentials=True)
 @token_required
 def generate_from_scratch(user):
     try:
