@@ -244,10 +244,16 @@ const LandingPage = ({ handleGoogleLogin }) => {
             <VStack spacing={16}>
               <VStack spacing={4}>
                 <Heading size="2xl">Pricing</Heading>
-                <Text fontSize="xl" color="gray.600" maxW="3xl" textAlign="center">
-                  Choose the plan that fits your needs and budget.<br></br>
-                  Each credit allows one generation cycle.
+                <VStack spacing={4} textAlign="center">
+                <Text fontSize="xl" color="gray.600">
+                  Choose the plan that fits your needs and budget.
                 </Text>
+                <Text fontSize="xl" color="gray.600">
+                  Each credit allows one generation cycle.<br></br>
+                  Generation from Existing text is 1 Credit.<br></br>
+                  Generation from Scratch is 2 Credits.
+                </Text>
+              </VStack>
               </VStack>
               <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10} width="full">
                 {pricingPlans.map((plan) => (
