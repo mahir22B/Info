@@ -29,16 +29,16 @@ const hardcodedProducts = [
   {
     id: "333153",
     name: "60 Credits",
-    price: 4900,
-    price_formatted: "$49.00",
+    price: 3900,
+    price_formatted: "$39.00",
     description: "Great for regular users or small teams. Create professional, customized infographics for your presentations, reports, and social media content.",
     color: "#805AD5" // Bright dark purple
   },
   {
     id: "333154",
     name: "120 Credits",
-    price: 8900,
-    price_formatted: "$89.00",
+    price: 6900,
+    price_formatted: "$69.00",
     description: "Ideal for power users, marketing teams, and agencies. Generate a wide range of stunning infographics for all your data visualization needs.",
     color: "#3182CE" // Bright dark blue
   }

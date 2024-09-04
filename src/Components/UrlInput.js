@@ -44,6 +44,7 @@ import {
 import { InfoIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { HamburgerIcon, HomeIcon, HistoryIcon, SettingsIcon, QuestionIcon, AddIcon } from '@chakra-ui/icons';
 import PricingModal from './PricingModal';
+import LandingPage from './LandingPage';
 
 const API_URL = "https://instagraphix.pro:5000";
 
@@ -1034,11 +1035,12 @@ const UrlInput = () => {
 
   if (!user) {
     return (
-      <Center height="100vh">
-        <Button onClick={handleGoogleLogin} colorScheme="blue" size="lg">
-          Login with Google!
-        </Button>
-      </Center>
+      // <Center height="100vh">
+      //   <Button onClick={handleGoogleLogin} colorScheme="blue" size="lg">
+      //     Login with Google!
+      //   </Button>
+      // </Center>
+    <LandingPage handleGoogleLogin={handleGoogleLogin} />
     );
   }
 
