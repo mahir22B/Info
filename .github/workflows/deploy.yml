@@ -1,0 +1,82 @@
+name: Build and Deploy
+
+on:
+  workflow_dispatch:
+jobs:
+  # Backend Build and Deploy Job
+  build_backend:
+    name: Build and Deploy Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      # Install dependencies for the Python backend
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Test backend (if applicable)
+      - name: Run Backend Tests
+        run: |
+          # Add test commands if you have tests
+          echo "Run backend tests here"
+
+      # Set up SSH agent for deployment
+      - name: Setup SSH for deployment
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Deploy backend using SSH
+      - name: Deploy Backend via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd ${{ secrets.DEPLOY_PATH }}/backend && \
+            git pull && \
+            source venv/bin/activate && \
+            pip install -r requirements.txt && \
+            systemctl restart backend-service
+          "
+
+  # Frontend Build and Deploy Job
+  build_frontend:
+    name: Build and Deploy Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      # Install dependencies and build the frontend
+      - name: Install and Build Frontend
+        run: |
+          npm install
+          npm run build
+
+      # Set up SSH agent for deployment
+      - name: Setup SSH for deployment
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Deploy frontend using SCP to copy build files
+      - name: Deploy Frontend via SCP
+        run: |
+          scp -o StrictHostKeyChecking=no -r build/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/frontend
