@@ -24,7 +24,7 @@ const hardcodedProducts = [
     price: 1900,
     price_formatted: "$19.00",
     description: "Perfect for first-time users or occasional projects. Each credit allows one generation cycle. Ideal for small businesses and individuals.",
-    color: "#1A365D" // Bright dark blue
+    color: "#3182CE" // Bright dark blue
   },
   {
     id: "333153",
@@ -40,7 +40,7 @@ const hardcodedProducts = [
     price: 6900,
     price_formatted: "$69.00",
     description: "Ideal for power users, marketing teams, and agencies. Generate a wide range of stunning infographics for all your data visualization needs.",
-    color: "#1A365D" // Bright dark blue
+    color: "#3182CE" // Bright dark blue
   }
 ];
 

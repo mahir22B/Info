@@ -26,7 +26,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["https://instagraphix.pro", "localhost:3000"]}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "https://instagraphix.pro"}}, supports_credentials=True)
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 oauth = OAuth(app)
 
