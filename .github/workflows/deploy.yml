@@ -16,6 +16,16 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
+      - name: Copy Files to old-build
+        run: |
+          ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
+          # Navigate to the /var/www directory
+          cd /var/www
+          mkdir -p old-build
+          cp -r main/* old-build/
+          ls old-build/
+          EOF
+
       - name: Deploy to GCP
         run: |
           ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
