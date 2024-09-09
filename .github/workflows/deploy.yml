@@ -33,8 +33,9 @@ jobs:
           if [ ! -d ".git" ]; then
             sudo git clone https://github.com/Hassan-DevOps2/Info.git .
           fi
-          sudo git pull origin main
+          sudo git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Hassan-DevOps2/Info.git main
           ls /var/www/old-build-1
           EOF
+
 
 
