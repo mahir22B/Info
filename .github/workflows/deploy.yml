@@ -16,19 +16,21 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
-      - name: Copy Files to old-build
-        run: |
-          ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
-          # Navigate to the /var/www directory
-          cd /var/www
-          sudo mkdir -p old-build
-          sudo cp -r main/* old-build/
-          sudo ls old-build/
-          EOF
+      # - name: Copy Files to old-build
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
+      #     # Navigate to the /var/www directory
+      #     cd /var/www
+      #     sudo mkdir -p old-build
+      #     sudo cp -r main/* old-build/
+      #     sudo ls old-build/
+      #     EOF
 
       - name: Deploy to GCP
         run: |
           ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
-          cd /var/www/main  # Navigate to your project directory
-          ls  # List files (you can replace this with actual deployment commands)
+          # Navigate to the /var/www directory
+          cd /var/www/old-build-1
+          git pull origin main
+          ls /var/www/old-build-1
           EOF
