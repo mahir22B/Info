@@ -16,8 +16,9 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
-      - name: Test SSH Connection
+      - name: Deploy to GCP
         run: |
           ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
-          ls /var/www/main
+          cd /var/www/main  # Navigate to your project directory
+          ls  # List files (you can replace this with actual deployment commands)
           EOF
