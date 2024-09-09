@@ -28,9 +28,9 @@ jobs:
 
       - name: Deploy to GCP
         run: |
-          ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
-          # Navigate to the /var/www directory
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/github-actions-deploy-key javeddevops0@34.130.29.74 << 'EOF'
           cd /var/www/old-build-1
           git pull origin main
           ls /var/www/old-build-1
           EOF
+
