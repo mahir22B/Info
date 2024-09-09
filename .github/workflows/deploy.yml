@@ -21,9 +21,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no javeddevops0@34.130.29.74 << 'EOF'
           # Navigate to the /var/www directory
           cd /var/www
-          mkdir -p old-build
-          cp -r main/* old-build/
-          ls old-build/
+          sudo mkdir -p old-build
+          sudo cp -r main/* old-build/
+          sudo ls old-build/
           EOF
 
       - name: Deploy to GCP
