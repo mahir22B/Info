@@ -31,7 +31,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/github-actions-deploy-key javeddevops0@34.130.29.74 << 'EOF'
           cd /var/www/old-build-1
           if [ ! -d ".git" ]; then
-            sudo git clone https://github.com/your-repo.git .
+            sudo git clone https://github.com/Hassan-DevOps2/Info.git .
           fi
           sudo git pull origin main
           ls /var/www/old-build-1
