@@ -22,6 +22,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@34.130.29.74 << 'EOF'
           # Navigate to the /var/www directory
           cd /var/www/temp-main
-          git clone https://github.com/Hassan-DevOps2/Info.git
+          git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git .
           EOF
 
