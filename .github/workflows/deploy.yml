@@ -20,12 +20,21 @@ jobs:
       - name: Deploy to GCP
         run: |
           ssh -o StrictHostKeyChecking=no root@34.130.29.74 << 'EOF'
+          cd /var/www
+          # current_date=$(date +'%Y-%m-%d')
+          # mkdir "$current_date"
+
+          # # Copy the contents of the 'main' directory to the new folder
+          # cp -r main/* "$current_date"
+          rm -rf main/*
+          rm -rf main/* main/.* 2>/dev/null || true
+          ls -l
           cd /var/www/main
           git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git .
-          # npm install
-          # npm run build
-          # cd ../BE
-          # source venv/bin/activate
-          # pip install -r requirements.txt
-          # pip install gunicorn psycopg2          
+          npm install
+          npm run build
+          cd ../BE
+          source venv/bin/activate
+          pip install -r requirements.txt
+          pip install gunicorn psycopg2          
           EOF
