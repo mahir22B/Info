@@ -33,7 +33,4 @@ jobs:
           cd /var/www
           ls -l
           EOF
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh-XXXXXXAkTsK2/agent.1559
-          SSH_AGENT_PID: 1560
 
