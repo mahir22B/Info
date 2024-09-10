@@ -39,4 +39,3 @@ jobs:
           pip install -r requirements.txt  
           pip install gunicorn psycopg2 
           EOF       
-          EOF
