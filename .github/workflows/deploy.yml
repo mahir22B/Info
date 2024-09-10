@@ -24,7 +24,7 @@ jobs:
             # current_date=$(date +'%Y-%m-%d')
             # mkdir "$current_date"
   
-            # # Copy the contents of the 'main' directory to the new folder
+            # Copy the contents of the 'main' directory to the new folder
             # cp -r main/* "$current_date"
             rm -rf main/*
             rm -rf main/* main/.* 2>/dev/null || true
@@ -37,5 +37,5 @@ jobs:
             python3 -m venv venv  
             source venv/bin/activate  
             pip install -r requirements.txt  
-            pip install gunicorn psycopg2 
-          EOF       
+            pip install gunicorn psycopg2
+          EOF
