@@ -28,22 +28,22 @@ jobs:
 
       - name: Deploy to GCP
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@34.130.29.74 << 'EOF'
+          ssh -o StrictHostKeyChecking=no root@34.130.29.74 << 'EOF'
           # Navigate to the /var/www directory
           cd /var/www
-      
+        
           # Remove old-build-1 directory if it exists
           if [ -d "old-build-1" ]; then
             rm -rf old-build-1
           fi
-      
+        
           # Create a new directory for cloning the repo
           mkdir old-build-1
           cd old-build-1
-      
-          # Clone the repository using root user and Personal Access Token (PAT)
+        
+          # Clone the repository using the root user and Personal Access Token (PAT)
           git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git .
-      
+        
           # List the contents to verify the repo was cloned
           ls -l
           EOF
