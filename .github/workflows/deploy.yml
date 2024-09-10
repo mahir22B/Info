@@ -20,17 +20,8 @@ jobs:
       - name: Deploy to GCP
         run: |
           ssh -o StrictHostKeyChecking=no root@34.130.29.74 << 'EOF'
-          cd /var/www
-          current_date=$(date +'%Y-%m-%d')
-          mkdir "$current_date"
-
-          # Copy the contents of the 'main' directory to the new folder
-          cp -r main/* "$current_date"
-          rm -rf main/*
-          ls -l
           cd /var/www/main
           git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git .
-          cd /var/www/main
           npm install
           npm run build
           cd ../BE
