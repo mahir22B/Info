@@ -28,30 +28,26 @@ jobs:
 
       - name: Deploy to GCP
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/github-actions-deploy-key javeddevops0@34.130.29.74 << 'EOF'
-          # Change directory to /var/www
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@34.130.29.74 << 'EOF'
+          # Navigate to the /var/www directory
           cd /var/www
       
-          # Ensure correct ownership and permissions for old-build-1 directory
-          sudo chown -R javeddevops0:javeddevops0 old-build-1
-          sudo chmod -R 755 old-build-1
-      
-          # Navigate to old-build-1
-          cd old-build-1
-      
-          # Clone the repository using Personal Access Token (PAT)
-          if [ ! -d "Info" ]; then
-            git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Hassan-DevOps2/Info.git
+          # Remove old-build-1 directory if it exists
+          if [ -d "old-build-1" ]; then
+            rm -rf old-build-1
           fi
       
-          # Change to the cloned directory
-          cd Info
+          # Create a new directory for cloning the repo
+          mkdir old-build-1
+          cd old-build-1
       
-          # List the contents of the Info directory (optional)
+          # Clone the repository using root user and Personal Access Token (PAT)
+          git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git .
+      
+          # List the contents to verify the repo was cloned
           ls -l
           EOF
         env:
           SSH_AUTH_SOCK: /tmp/ssh-XXXXXXAkTsK2/agent.1559
           SSH_AGENT_PID: 1560
-
 
