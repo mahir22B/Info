@@ -38,6 +38,6 @@ jobs:
           source venv/bin/activate  
           pip install -r requirements.txt  
           pip install gunicorn psycopg2
-          gunicorn --bind 0.0.0.0:5000 app:app &
+          gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app
           sudo lsof -i :5000
           EOF
