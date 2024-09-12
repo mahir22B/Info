@@ -30,7 +30,7 @@ jobs:
           rm -rf main/* main/.* 2>/dev/null || true
           ls -l
           cd /var/www/main
-          git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git .
+          git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/mahir22B/Info.git .
           npm install
           npm run build
           cd /var/www/main/BE

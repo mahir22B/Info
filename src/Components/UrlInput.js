@@ -1096,7 +1096,7 @@ const UrlInput = () => {
                       width="100%"
                     >
                       <TriangleUpIcon mr={2}/>
-                      <Text>Home Page</Text>
+                      <Text>Generate from Text</Text>
                     </Box>
                   </Flex>
                 </Link>
