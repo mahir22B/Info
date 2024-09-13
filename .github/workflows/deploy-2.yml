@@ -1,0 +1,55 @@
+name: CI/CD Pipeline for React + Flask 
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      # Set up SSH using the private key from GitHub Secrets
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
+
+      - name: Deploy to GCP
+        run: |
+          ssh -o StrictHostKeyChecking=no root@34.130.29.74 << 'EOF'
+          
+          # Navigate to the working directory
+          cd /var/www
+
+          # Clean up old 'main' folder if it exists
+          rm -rf main/* main/.* 2>/dev/null || true
+          
+          # Clone the latest code from GitHub
+          git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git main
+          
+          # Build the React frontend
+          cd /var/www/main
+          npm install
+          npm run build
+
+          # Move to the backend folder and set up the virtual environment
+          cd /var/www/main/BE
+          python3 -m venv venv
+          source venv/bin/activate
+          
+          # Install Python dependencies
+          pip install -r requirements.txt
+          pip install gunicorn psycopg2
+
+          # Kill any process running on port 5000 (existing gunicorn process)
+          fuser -k 5000/tcp || true
+
+          # Start gunicorn in the background
+          gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app &
+
+          # Verify the gunicorn process is running on port 5000
+          lsof -i :5000
+          
+          EOF
