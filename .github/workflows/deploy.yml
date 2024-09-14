@@ -32,7 +32,7 @@ jobs:
           pip install -r requirements.txt
           pip install gunicorn psycopg2
           fuser -k 5000/tcp || true
-          gunicorn --bind 0.0.0.0:5000 app:app &
-          # nohup gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app &
+          # gunicorn --bind 0.0.0.0:5000 app:app &
+          nohup gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app &
           lsof -i :5000
           EOF
