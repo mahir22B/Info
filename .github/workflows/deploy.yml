@@ -23,15 +23,15 @@ jobs:
           cd /var/www
           rm -rf main/* main/.* 2>/dev/null || true
           cd /var/www/main
-          git pull https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git
+          git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/Hassan-DevOps2/Info.git
           npm install
           npm run build
-          # cd /var/www/main/BE
-          # python3 -m venv venv
-          # source venv/bin/activate
-          # pip install -r requirements.txt
-          # pip install gunicorn psycopg2
-          # fuser -k 5000/tcp || true
-          # nohup gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app &
-          # lsof -i :5000
+          cd /var/www/main/BE
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          pip install gunicorn psycopg2
+          fuser -k 5000/tcp || true
+          nohup gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app &
+          lsof -i :5000
           EOF
