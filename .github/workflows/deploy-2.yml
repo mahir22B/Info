@@ -45,9 +45,9 @@ jobs:
 
           # Kill any process running on port 5000 (existing gunicorn process)
           fuser -k 5000/tcp || true
-
+          gunicorn --bind 0.0.0.0:5000 app:app &
           # Start gunicorn in the background
-          gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app &
+          #gunicorn --bind 0.0.0.0:5000 --certfile=/etc/letsencrypt/live/instagraphix.pro/fullchain.pem --keyfile=/etc/letsencrypt/live/instagraphix.pro/privkey.pem app:app &
 
           # Verify the gunicorn process is running on port 5000
           lsof -i :5000
