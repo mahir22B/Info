@@ -46,7 +46,9 @@ import { HamburgerIcon, HomeIcon, HistoryIcon, SettingsIcon, QuestionIcon, AddIc
 import PricingModal from './PricingModal';
 import LandingPage from './LandingPage';
 
-const API_URL = "https://instagraphix.pro:5000";
+
+const API_URL = "https://be-194431053746.us-central1.run.app";
+// Use API_URL for all your fetch or axios calls
 
 // const EditMode = ({ initialSettings, onUpdate }) => {
 //   const [fontSettings, setFontSettings] = useState(initialSettings);
@@ -564,7 +566,7 @@ const GenerateFromScratch = ({ onCreditsUpdate }) => {
   const handleGenerate = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://instagraphix.pro:5000/api/generate_from_scratch', {
+      const response = await fetch('https://be-194431053746.us-central1.run.app/api/generate_from_scratch', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -585,7 +587,7 @@ const GenerateFromScratch = ({ onCreditsUpdate }) => {
       
       // Fetch config files for each infographic
       const infographicsWithConfig = await Promise.all(data.infographics.map(async (infographic) => {
-        const configResponse = await fetch(`https://instagraphix.pro:5000/api/get_config/${infographic.template_name}`);
+        const configResponse = await fetch(`https://be-194431053746.us-central1.run.app/api/get_config/${infographic.template_name}`);
         if (!configResponse.ok) {
           throw new Error(`Failed to fetch config for ${infographic.template_name}`);
         }
@@ -881,7 +883,7 @@ const UrlInput = () => {
     setInfographics([]);
   
     try {
-      const response = await fetch('https://instagraphix.pro:5000/api/generate_infographic', {
+      const response = await fetch('https://be-194431053746.us-central1.run.app/api/generate_infographic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -913,7 +915,7 @@ const UrlInput = () => {
       }
   
       const infographicsWithConfig = await Promise.all(data.infographics.map(async (infographic) => {
-        const configResponse = await fetch(`https://instagraphix.pro:5000/api/get_config/${infographic.template_name}`);
+        const configResponse = await fetch(`https://be-194431053746.us-central1.run.app/api/get_config/${infographic.template_name}`);
         if (!configResponse.ok) {
           throw new Error(`Failed to fetch config for ${infographic.template_name}`);
         }
@@ -987,7 +989,7 @@ const UrlInput = () => {
   
     setIsLoading(true);
     try {
-      const response = await fetch('https://instagraphix.pro:5000/api/finalize_infographic', {
+      const response = await fetch('https://be-194431053746.us-central1.run.app/api/finalize_infographic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
