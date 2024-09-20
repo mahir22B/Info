@@ -26,7 +26,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://instagraphix.pro"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": ["https://instagraphix.pro", "https://www.instagraphix.pro"]}}, supports_credentials=True)
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 oauth = OAuth(app)
 
@@ -883,6 +883,11 @@ def get_config(template_name):
 import json
 from jsonschema import validate, ValidationError
 import traceback
+
+@app.route('/', methods=['GET'])
+@token_required
+def one():
+    return jsonify({'message': "It's working"})
 
 @app.route('/api/generate_from_scratch', methods=['POST'])
 @cross_origin(origins=["https://instagraphix.pro"], supports_credentials=True)
