@@ -613,7 +613,7 @@ def authorized():
         user = User.query.filter_by(google_id=user_info['id']).first()
         if not user:
             user = User(
-                username=user_info['email'],  # or user_info['name'] if you prefer
+                username=user_info['email'], 
                 email=user_info['email'],
                 google_id=user_info['id']
             )
@@ -624,7 +624,7 @@ def authorized():
         session['user_id'] = user.id
         
         # Redirect to frontend
-        return redirect('https://instagraphix.pro')
+        return redirect('https://instagraphix.pro?login_success=true')
     except Exception as e:
         print(f"Error in Google callback: {str(e)}")
         return jsonify({'error': 'Authentication failed'}), 400

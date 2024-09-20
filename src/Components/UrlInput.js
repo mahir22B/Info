@@ -820,19 +820,37 @@ const UrlInput = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/user`, {
-          credentials: 'include'
-        });
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-          setCredits(userData.credits);
+        const urlParams = new URLSearchParams(window.location.search);
+        const loginSuccess = urlParams.get('login_success');
+  
+        if (loginSuccess === 'true') {
+          // If login was successful, fetch user data
+          const response = await fetch(`${API_URL}/api/user`, {
+            credentials: 'include'
+          });
+          if (response.ok) {
+            const userData = await response.json();
+            setUser(userData);
+            setCredits(userData.credits);
+            // Remove the login_success parameter from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+        } else {
+          // If no success parameter, check login status as before
+          const response = await fetch(`${API_URL}/api/user`, {
+            credentials: 'include'
+          });
+          if (response.ok) {
+            const userData = await response.json();
+            setUser(userData);
+            setCredits(userData.credits);
+          }
         }
       } catch (error) {
         console.error('Error checking login status:', error);
       }
     };
-
+  
     checkLoginStatus();
   }, []);
 
