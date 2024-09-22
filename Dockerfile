@@ -25,8 +25,8 @@ RUN rm -rf ./*
 # Copy the built React app from the previous stage
 COPY --from=build /app/build/ .
 
-# Expose port 3000 for the Nginx server
-EXPOSE 3000
+# Expose port 80 for the Nginx server
+EXPOSE 80
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
