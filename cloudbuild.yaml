@@ -21,7 +21,7 @@ steps:
       - '--platform'
       - 'managed'
 
-    options:
-      # Option (a): Specify a dedicated logs bucket (Recommended for most cases)
-      logging:
-        bucket: gs://fe-info-logs 
+# options block should be at this level
+options:
+  # Option (a): Specify a dedicated logs bucket (Recommended for most cases)
+  logging: GCS_ONLY 
