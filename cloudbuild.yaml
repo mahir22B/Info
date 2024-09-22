@@ -1,0 +1,27 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/fe-repo/fe:$SHORT_SHA', '.']
+
+  # Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/fe-repo/fe:$SHORT_SHA']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: 
+      - 'run'
+      - 'deploy'
+      - 'fe'  # Name of your Cloud Run service
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/fe-repo/fe:$SHORT_SHA'
+      - '--region'
+      - 'us-central1' 
+      - '--platform'
+      - 'managed'
+
+    options:
+      # Option (a): Specify a dedicated logs bucket (Recommended for most cases)
+      logging:
+        bucket: gs://fe-info-logs 
