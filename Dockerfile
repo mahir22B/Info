@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]  # Replace 'app:app' if needed
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--timeout", "30", "app:app"]  # Replace 'app:app' if needed
