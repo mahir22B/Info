@@ -24,4 +24,4 @@ steps:
 # options block should be at this level
 options:
   # Option (a): Specify a dedicated logs bucket (Recommended for most cases)
-  logging: GCS_ONLY 
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
