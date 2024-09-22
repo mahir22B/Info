@@ -1,0 +1,27 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/be-repo/be:$SHORT_SHA', '.']
+
+  # Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/be-repo/be:$SHORT_SHA']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: 
+      - 'run'
+      - 'deploy'
+      - 'be'  # Name of your Cloud Run service
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/be-repo/be:$SHORT_SHA'
+      - '--region'
+      - 'us-central1' 
+      - '--platform'
+      - 'managed'
+
+# options block should be at this level
+options:
+  # Option (a): Specify a dedicated logs bucket (Recommended for most cases)
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
