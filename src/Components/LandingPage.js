@@ -176,7 +176,7 @@ const LandingPage = ({ handleGoogleLogin }) => {
         <Container maxW="container.xl" py={20}>
           <SimpleGrid columns={{ base: 1, lg: 2 }} gap={12} alignItems="center">
             <VStack align="start" spacing={6} justifyContent="center">
-              <Heading size="2xl">Beautiful Infographics</Heading>
+              <Heading size="2xl">Turn Your Text Into Beautiful Infographics</Heading>
               <Text fontSize="xl" color="gray.600">
                 Instagraphix is the easiest way to create stunning infographics from your text. No design skills required!
               </Text>
