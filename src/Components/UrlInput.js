@@ -47,7 +47,7 @@ import PricingModal from './PricingModal';
 import LandingPage from './LandingPage';
 
 
-const API_URL = "https://be-194431053746.us-central1.run.app";
+const API_URL = "http://be-194431053746.us-central1.run.app";
 // Use API_URL for all your fetch or axios calls
 
 // const EditMode = ({ initialSettings, onUpdate }) => {
