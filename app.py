@@ -26,7 +26,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["https://instagraphix.pro"]}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": ["https://instagraphix.pro", "https://www.instagraphix.pro"]}}, supports_credentials=True)
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 oauth = OAuth(app)
 
@@ -56,7 +56,6 @@ google = oauth.register(
     api_base_url='https://www.googleapis.com/oauth2/v1/',
     client_kwargs={'scope': 'openid email profile'},
     jwks_uri = "https://www.googleapis.com/oauth2/v3/certs",
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
 )
 
 
@@ -625,6 +624,7 @@ def authorized():
         
         # Set user session
         session['user_id'] = user.id
+        print("Session after login:", session)
         
         # Redirect to frontend
         return redirect('https://instagraphix.pro?login_success=true')
