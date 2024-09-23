@@ -36,9 +36,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_DOMAIN'] = '.instagraphix.pro'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -97,6 +98,7 @@ class Infographic(db.Model):
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        print("Session in decorator:", session)
         token = request.headers.get('Authorization')
         if not token:
             return jsonify({'message': 'Token is missing!'}), 401
