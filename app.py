@@ -37,8 +37,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_DOMAIN'] = '.instagraphix.pro' 
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -55,7 +55,8 @@ google = oauth.register(
     authorize_params=None,
     api_base_url='https://www.googleapis.com/oauth2/v1/',
     client_kwargs={'scope': 'openid email profile'},
-    jwks_uri = "https://www.googleapis.com/oauth2/v3/certs"
+    jwks_uri = "https://www.googleapis.com/oauth2/v3/certs",
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
 )
 
 
@@ -611,6 +612,7 @@ def authorized():
 
         print("User info received:", user_info)
         
+        # Check if user exists, if not, create a new user
         user = User.query.filter_by(google_id=user_info['id']).first()
         if not user:
             user = User(
@@ -621,14 +623,15 @@ def authorized():
             db.session.add(user)
             db.session.commit()
         
+        # Set user session
         session['user_id'] = user.id
-        print("Session after login:", session)
         
+        # Redirect to frontend
         return redirect('https://instagraphix.pro?login_success=true')
     except Exception as e:
         print(f"Error in Google callback: {str(e)}")
         return jsonify({'error': 'Authentication failed'}), 400
-    
+
 @app.route('/')
 def index():
     if 'user_id' in session:
