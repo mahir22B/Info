@@ -819,11 +819,15 @@ const UrlInput = () => {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
+      console.log("Checking login status...");
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const loginSuccess = urlParams.get('login_success');
+
+        console.log(`Login success parameter: ${loginSuccess}`);
   
         if (loginSuccess === 'true') {
+          console.log("Login success detected, fetching user data...");
           // If login was successful, fetch user data
           const response = await fetch(`${API_URL}/api/user`, {
             credentials: 'include'
@@ -834,6 +838,7 @@ const UrlInput = () => {
             setCredits(userData.credits);
             // Remove the login_success parameter from the URL
             window.history.replaceState({}, document.title, window.location.pathname);
+            console.log("URL parameters cleaned");
           }
         } else {
           // If no success parameter, check login status as before
@@ -855,6 +860,7 @@ const UrlInput = () => {
   }, []);
 
   const handleGoogleLogin = () => {
+    console.log("Initiating Google login...");
     window.location.href = `${API_URL}/login/google`;
   };
 
