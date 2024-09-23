@@ -608,6 +608,8 @@ def authorized():
         token = google.authorize_access_token()
         resp = google.get('userinfo', token=token)
         user_info = resp.json()
+
+        print("User info received:", user_info)
         
         user = User.query.filter_by(google_id=user_info['id']).first()
         if not user:
@@ -620,6 +622,7 @@ def authorized():
             db.session.commit()
         
         session['user_id'] = user.id
+        print("Session after login:", session)
         
         return redirect('https://instagraphix.pro?login_success=true')
     except Exception as e:
