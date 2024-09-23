@@ -606,12 +606,15 @@ def login_google():
 
 @app.route('/callback/google')
 def authorized():
+    app.logger.info("Received Google callback")
+    app.logger.info(f"Request args: {request.args}")
     try:
         token = google.authorize_access_token()
+        app.logger.info("Access token authorized")
         resp = google.get('userinfo', token=token)
         user_info = resp.json()
+        app.logger.info(f"User info received: {user_info}")
 
-        print("User info received:", user_info)
         
         # Check if user exists, if not, create a new user
         user = User.query.filter_by(google_id=user_info['id']).first()
@@ -629,8 +632,10 @@ def authorized():
         print("Session after login:", session)
         
         # Redirect to frontend
+        app.logger.info("Google callback processed successfully")
         return redirect('https://instagraphix.pro?login_success=true')
     except Exception as e:
+        app.logger.error(f"Error in Google callback: {str(e)}")
         print(f"Error in Google callback: {str(e)}")
         return jsonify({'error': 'Authentication failed'}), 400
 
