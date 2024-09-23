@@ -827,7 +827,11 @@ const UrlInput = () => {
   
         if (loginSuccess === 'true') {
           const response = await fetch(`${API_URL}/api/user`, {
-            credentials: 'include'
+            credentials: 'include',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
           });
           console.log('User data response:', response);
           if (response.ok) {
@@ -845,7 +849,7 @@ const UrlInput = () => {
   
     checkLoginStatus();
   }, []);
-  
+
   const handleGoogleLogin = () => {
     window.location.href = `${API_URL}/login/google`;
   };
