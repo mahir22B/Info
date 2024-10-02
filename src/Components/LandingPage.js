@@ -253,7 +253,7 @@ const LandingPage = ({ handleGoogleLogin }) => {
               </Text>
               <Box width="100%" maxW="4xl" borderRadius="xl" overflow="hidden">
                 <iframe
-                  src="https://drive.google.com/file/d/1scUpIPkJgbTX2ipevm6ZLv4y_E9SCO3z/view?usp=sharing"
+                  src="https://youtu.be/bIrMnYH6Eg4"
                   width="100%"
                   height="480"
                   allow="autoplay"
